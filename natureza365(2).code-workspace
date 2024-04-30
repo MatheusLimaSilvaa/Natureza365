@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"name": "natureza365(2)",
+			"path": "."
+		},
+		{
+			"name": "config",
+			"path": "../natureza365/config"
+		},
+		{
+			"name": "controllers",
+			"path": "../natureza365/controllers"
+		},
+		{
+			"name": "middleware",
+			"path": "../natureza365/middleware"
+		},
+		{
+			"name": "migrations",
+			"path": "../natureza365/migrations"
+		},
+		{
+			"name": "models",
+			"path": "../natureza365/models"
+		},
+		{
+			"name": "routes",
+			"path": "../natureza365/routes"
+		},
+		{
+			"name": "services",
+			"path": "../natureza365/services"
+		},
+		{
+			"name": "tests",
+			"path": "../natureza365/tests"
+		},
+		{
+			"name": "utils",
+			"path": "../natureza365/utils"
+		}
+	],
+	"settings": {}
+}

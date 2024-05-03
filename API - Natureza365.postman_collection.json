@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "4e31284d-3855-4750-a8a7-d5dfc3ec8c71",
+		"name": "API - Natureza365",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29095255"
+	},
+	"item": [
+		{
+			"name": "Listar todos os Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar um usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Matheus\",\r\n    \"sexo\": \"Masculino\",\r\n    \"cpf\": \"01234567891\",\r\n    \"endereco\": \"José Maria da Luz, 539\",\r\n    \"e-mail\": \"matheus.test@gmail.com\",\r\n    \"senha\": \"123456789\",\r\n    \"data_de_nascimento\": \"18/08/1995\",}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos os locais",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/locais/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"locais",
+						""
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "localidade",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar um local",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome_do_local\": \"Gravata\",\r\n    \"descricao\": Após fazer a trilha do gravata, chega na praia do gravata\r\n,\r\n    \"localidade\": Trilha do gravata/praia do gravata\r\n,\r\n    \"coordenadas geográficas\": -27.6134215,-48.433538508464345\r\n,\r\n    \"duracao_da_trilha\": 30 minutos\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/locais/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"locais",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir um local",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/local/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"local",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar local",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome_do_local\": \"novo Gravata\",\r\n    \"descricao\": Após fazer a trilha do gravata, chega na praia do gravata\r\n,\r\n    \"localidade\": Trilha do gravata/praia do gravata\r\n,\r\n    \"coordenadas geográficas\": -27.6134215,-48.433538508464345\r\n,\r\n    \"duracao_da_trilha\": 35 minutos\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/local/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"local",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

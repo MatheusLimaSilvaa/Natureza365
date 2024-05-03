@@ -1,10 +1,4 @@
 {
-  "dependencies": {
-    "express": "^4.19.2",
-    "node.js": "^0.0.1-security",
-    "nominatim": "^0.1.0",
-    "sequelize": "^6.37.3"
-  },
   "name": "natureza365",
   "description": "Olá, bem vindo ao FloripaEcoConecta.",
   "version": "1.0.0",
@@ -12,10 +6,29 @@
   "directories": {
     "test": "tests"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "author": "^1.0.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dependencies": "^0.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "i": "^0.3.7",
+    "jsonwebtoken": "^9.0.2",
+    "license": "^1.0.3",
+    "node.js": "^0.0.1-security",
+    "nodemon": "^3.1.0",
+    "nominatim": "^0.1.0",
+    "pg": "^8.11.5",
+    "pg-connection-string": "^2.6.4",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  }
 }

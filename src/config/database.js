@@ -7,5 +7,16 @@ module.exports = {
   username: process.env.USERNAMEDB, //Qual o nome do seu usuário no postgres;
   password: process.env.PASSWORDDB, //Qual a senha do seu usuário no postgres;
   database: process.env.DATABASE, //Qual o nome do seu database no postgres;
-  port: process.env.PORT //Qual porta do seu postgres (Normalmente é a 5432);
+  port: process.env.PORT, //Qual porta do seu postgres (Normalmente é a 5432);
+  define: {
+    timestamps: true,
+    underscored: true,
+    underscoredAll: true,
+    'createdAt': 'created_at',
+    'updatedAt': 'updated_at',
+  },
+  dialectOptions: {
+    timezone: 'America/Sao_Paulo',
+  },
+  timezone: 'America/Sao_Paulo',
 };

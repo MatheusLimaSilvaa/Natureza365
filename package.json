@@ -1,36 +1,37 @@
 {
-  "name": "natureza365",
-  "description": "Olá, bem vindo ao FloripaEcoConecta.",
+  "name": "api-rest",
   "version": "1.0.0",
-  "main": "app.js",
-  "directories": {
-    "test": "tests"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19",
+    "sequelize-cli": "^6.4.1",
+    "sucrase": "^3.25.0"
+  },
   "dependencies": {
-    "author": "^1.0.0",
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dependencies": "^0.0.1",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "i": "^0.3.7",
-    "jsonwebtoken": "^9.0.2",
-    "license": "^1.0.3",
-    "node.js": "^0.0.1-security",
-    "nodemon": "^3.1.0",
-    "nominatim": "^0.1.0",
+    "docker-compose": "^0.24.8",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-delay": "^0.2.0",
+    "helmet": "^5.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^3.0.1",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.11.5",
-    "pg-connection-string": "^2.6.4",
-    "sequelize": "^6.37.3"
-  },
-  "devDependencies": {
-    "sequelize-cli": "^6.6.2"
+    "sequelize": "^6.21.3"
   }
 }

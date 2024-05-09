@@ -4,7 +4,7 @@ class LocalC {
   //STORE -> CRIAÇÃO
   async store(req, res) {
     try {
-      console.log(req.body);
+      //console.log(req.body);
       const novoLocal = await Local.create(req.body);
 
       const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = novoLocal;
@@ -18,7 +18,7 @@ class LocalC {
   //INDEX -> LISTAR TODOS
   async index(req, res) {
     try {
-      const locals = await local.findAll({ attributes: ['id, local', 'descricao', 'localidade', 'coordenadas_geograficas', 'id_local'] });
+      const locals = await Local.findAll({ attributes: ['id', 'local', 'descricao', 'localidade', 'coordenadas_geograficas', 'id_local'] });
       return res.json(locals);
     } catch (e) {
       console.log(e);
@@ -29,7 +29,7 @@ class LocalC {
   //SHOW -> LISTAR 1
   async show(req, res) {
     try {
-      const locals = await locals.findByPk(req.params.id);
+      const locals = await Local.findByPk(req.params.id);
 
       if (!locals) {
         return res.status(400).json({
@@ -37,7 +37,7 @@ class LocalC {
         });
       }
 
-      const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = local;
+      const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = locals;
 
       return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local });
     } catch (e) {
@@ -51,18 +51,29 @@ class LocalC {
   // Update
   async update(req, res) {
     try {
-      const locals = await local.findByPk(req.localId);
+      const { id } = req.params;
+      
 
-      if (!locals) {
+      if (!id) {
         return res.status(400).json({
-          errors: ['Local não existe'],
+          errors: ['ID não existe'],
         });
       }
 
-      const novosDados = await local.update(req.body);
-      const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = novosDados;
-      return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local });
+      const localAtual = await Local.findByPk(id);
+
+      if (!localAtual) {
+        return res.status(400).json({
+          errors: ['Local não encontrado'],
+        });
+      }
+      const novosDados = await localAtual.update(req.body);
+
+      return res.json(novosDados)
+    
+
     } catch (e) {
+      console.log(e)
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
       });
@@ -72,16 +83,25 @@ class LocalC {
   // Delete
   async delete(req, res) {
     try {
-      const locals = await local.findByPk(req.localId);
+      const { id } = req.params;
 
-      if (!locals) {
+      if (!id) {
         return res.status(400).json({
-          errors: ['Local não existe'],
+          errors: ['ID não encontrado'],
+        });
+      }
+
+      const local = await Local.findByPk(id);
+
+      if (!local) {
+        return res.status(400).json({
+          errors: ['Local não encontrado'],
         });
       }
 
       await local.destroy();
-      return res.json(null);
+
+      return res.json({ info: ['local apagado com sucesso.'] });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),

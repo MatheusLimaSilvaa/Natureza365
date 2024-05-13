@@ -20,6 +20,7 @@ module.exports = {
       cpf: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        unique: true
       },
       endereco: {
         type: Sequelize.STRING,

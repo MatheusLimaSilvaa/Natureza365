@@ -11,7 +11,7 @@ import helmet from 'helmet';
 import delay from 'express-delay';
 
 import auth from './routes/authRoutes';
-import user from './routes/localRoutes';
+import user from './routes/userRoutes';
 import local from './routes/localRoutes';
 
 const whiteList = [

@@ -7,10 +7,23 @@ export default class User extends Model {
       nome: {
         type: Sequelize.STRING,
         defaultValue: '',
+        validate: {
+          len: {
+            args: [4, 30],
+            msg: 'O nome precisa ter entre 4 e 30 caracteres.',
+          },
+        },
       },
       sexo: {
         type: Sequelize.STRING,
         defaultValue: '',
+        validate: {
+          len: {
+            args: [3, 20],
+            msg: 'preencha o seu sexo',
+          },
+        }  
+        
       },
       cpf: {
         type: Sequelize.STRING,
@@ -18,26 +31,45 @@ export default class User extends Model {
         unique: {
             msg: 'cpf já existe',
           },
+          validate: {
+            len: {
+              args: [11, 11],
+              msg: 'O CPF precisa ter 11 numeros.',
+            },
+          },
         },
       endereco: {
         type: Sequelize.STRING,
-        defaultValue: '',    
+        defaultValue: '',
+        validate: {
+          len: {
+            args: [3, 100],
+            msg: 'preencha o endereço.',
+          },
+        }  
       },
       email: {
-          type: Sequelize.STRING,
-          defaultValue: '',
-          unique: {
-              msg: 'E-mail já existe',
-            },
-            validate: {
-                isEmail: {
-                    msg: 'E-mail inválido',
-                },
-            },
+        type: Sequelize.STRING,
+        defaultValue: '',
+        unique: {
+          msg: 'E-mail já existe',
         },
+        validate: {
+          isEmail: {
+          msg: 'E-mail inválido',
+          },
+        },
+   
+      },
       data_de_nascimento: {
         type: Sequelize.STRING,
         defaultValue: '',
+        validate: {
+          len: {
+            args: [3, 20],
+            msg: 'preencha sua data de nascimento',
+          },
+        }  
       },
       password_hash: {
         type: Sequelize.STRING,
@@ -68,5 +100,9 @@ export default class User extends Model {
 
   checkPassword(password) {
     return bcryptjs.compare(password, this.password_hash);
+  }
+
+  static associate(models) {
+    this.hasMany(models.Local, { foreignKey: 'user_id' });
   }
 }

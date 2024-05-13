@@ -11,10 +11,11 @@ export default async (req, res, next) => {
   }
 
   // eslint-disable-next-line no-unused-vars
-  const [bearer, auth] = authorization.split(' ');
+  const [bearer, token] = authorization.split(' ');
+
 
   try {
-    const dados = jwt.verify(auth, process.env.SECRET_JWT);
+    const dados = jwt.verify(token, process.env.TOKEN_SECRET);
     const { id, email } = dados;
 
     //Para nova verificação na base de dados, caso o usuario muda o e-mail;
@@ -36,6 +37,7 @@ export default async (req, res, next) => {
 
     return next();
   } catch (e) {
+    console.log(e)
     return res.status(401).json({
       errors: ['Token expirado ou inválido'],
     });

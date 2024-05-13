@@ -4,12 +4,12 @@ class LocalC {
   //STORE -> CRIAÇÃO
   async store(req, res) {
     try {
-      //console.log(req.body);
-      const novoLocal = await Local.create(req.body);
+      const reqId = req.userId;
+      const novoLocal = await Local.create({...req.body, user_id: reqId});
 
-      const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = novoLocal;
+      const { id, local, descricao, localidade, coordenadas_geograficas, id_local, user_id } = novoLocal;
 
-      return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local });
+      return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local, user_id });
     } catch (e) {
       console.log(e)
     }
@@ -52,7 +52,7 @@ class LocalC {
   async update(req, res) {
     try {
       const { id } = req.params;
-      
+      const idUser = req.userId;
 
       if (!id) {
         return res.status(400).json({
@@ -67,6 +67,13 @@ class LocalC {
           errors: ['Local não encontrado'],
         });
       }
+
+      if (localAtual.user_id != idUser) {
+        return res.status(400).json({
+          errors: ['Local cadastrado por outro usuário'],
+        });
+      }
+
       const novosDados = await localAtual.update(req.body);
 
       return res.json(novosDados)
@@ -84,6 +91,7 @@ class LocalC {
   async delete(req, res) {
     try {
       const { id } = req.params;
+      const idUser = req.userId;
 
       if (!id) {
         return res.status(400).json({
@@ -96,6 +104,12 @@ class LocalC {
       if (!local) {
         return res.status(400).json({
           errors: ['Local não encontrado'],
+        });
+      }
+
+      if (local.user_id != idUser) {
+        return res.status(400).json({
+          errors: ['Local cadastrado por outro usuário'],
         });
       }
 

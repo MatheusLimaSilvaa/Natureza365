@@ -1,0 +1,199 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ConectOfNature",
+        "description": "Essa API tem como base a conexão humana com a natureza.",
+        "termOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "matheus_lima-silva@estudante.sesisenai.org.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/v1",
+            "description": "API de test"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "summary": "Cadastro de Usuário",
+                "description": "Essa rota será responsável por cadastrar um novo usuário",
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "nome": "Matheus Lima",
+                                        "sexo": "Masculino",
+                                        "cpf": "12345678912",
+                                        "endereco": "José Maria da Luz, 539",
+                                        "email": "matheuslima@teste.com",
+                                        "data_de_nascimento": "1995-18-08"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "response": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "user Already exists"
+                    },
+                    "200": {
+                        "description": "Registered user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/users/{id}": {
+        "get": {
+            "description": "Buscar de um usuário pelo id",
+            "summary": "Busca de um usuário pelo id",
+            "tags": [
+                "user"
+            ],
+            "parameters": [
+                {
+                    "nome": "id",
+                    "in": "path",
+                    "description": "id do usuário para busca",
+                    "required": true
+                }
+            ],
+            "response": {
+                "200": {
+                    "description": "user obtained",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                },
+                "put": {
+                    "description": "Alterar um usuário pelo id",
+                    "summary": "Alterar um usuário pelo id",
+                    "tags": [
+                        "user"
+                    ],
+                    "security": [
+                        {
+                            "bearerAuth": []
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "nome": "id",
+                            "in": "path",
+                            "description": "id do usuário para Alterar",
+                            "required": true
+                        }
+                    ],
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {
+                                            "nome": "Matheus Lima silva",
+                                            "sexo": "Masculino",
+                                            "cpf": "12345678901",
+                                            "endereco": "josé mendes, 500",
+                                            "email": "matheuslimasilva@teste.com",
+                                            "data_de_nascimento": "1999-20-10"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "response": {
+                        "200": {
+                            "description": "user obtained",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "items": {
+                                            "$ref": "#/components/schemas/user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "components": {
+            "schemas": {
+                "user": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "string"
+                        },
+                        "sexo": {
+                            "type": "string"
+                        },
+                        "cpf": {
+                            "type": "string"
+                        },
+                        "endereco": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        },
+                        "data_de_nascimento": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "securitySchemes": {
+                "bearerAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
+                }
+            }
+        }
+    }
+}

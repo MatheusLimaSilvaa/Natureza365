@@ -10,7 +10,8 @@ class auth {
         errors: ['Credenciais Inválidas'],
       });
     }
-
+    
+    console.log(email)
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -26,11 +27,13 @@ class auth {
     }
 
     const { id } = user;
-    const auth = jwt.sign({ id, email }, process.env.SECRET_JWT, {
-      expiresIn: process.env.SECRET_JWT,
+    console.log(id)
+    
+    const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
+      expiresIn: process.env.TOKEN_EXPIRATION,
     });
 
-    return res.json({ auth, user: { nome: user.nome, id, email } });
+    return res.json({ token, user: { nome: user.nome, id, email } });
   }
 }
 

@@ -1,15 +1,29 @@
 import Local from "../models/Local";
+import axios from 'axios';
 
 class LocalC {
   //STORE -> CRIAÇÃO
   async store(req, res) {
     try {
+      const { cep2 } = req.body;
+      const { id2 } = req.userId
+      const response = await axios.get(`http://localhost:3000/map/${cep2}`)
+      
       const reqId = req.userId;
-      const novoLocal = await Local.create({...req.body, user_id: reqId});
+      const novoLocal = await Local.create({...req.body, user_id: reqId, 
+        local: response.data.bairro,
+        cep: cep2,
+        localidade: response.data.cidade,
+        lat: response.data.lat,
+        lon: response.data.lon,
+        id_local: response.data.id_local,
+        user_id: id2,
+        link_google: response.data.link_googl
+      });
 
-      const { id, local, descricao, localidade, coordenadas_geograficas, id_local, user_id } = novoLocal;
+      const { id, local, cep, localidade, lat, lon, id_local, user_id, link_google } = novoLocal;
 
-      return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local, user_id });
+      return res.json({ id, local, cep, localidade, lat, lon, id_local, user_id, link_google });
     } catch (e) {
       console.log(e)
     }
@@ -18,7 +32,7 @@ class LocalC {
   //INDEX -> LISTAR TODOS
   async index(req, res) {
     try {
-      const locals = await Local.findAll({ attributes: ['id', 'local', 'descricao', 'localidade', 'coordenadas_geograficas', 'id_local'] });
+      const locals = await Local.findAll({ attributes: ['id', 'local', 'cep', 'localidade', 'lat', 'lon', 'id_local', 'user_id', 'link_google'] });
       return res.json(locals);
     } catch (e) {
       console.log(e);
@@ -37,9 +51,9 @@ class LocalC {
         });
       }
 
-      const { id, local, descricao, localidade, coordenadas_geograficas, id_local } = locals;
+      const { id, local, cep, localidade, lat, lon, id_local, user_id, link_google } = locals;
 
-      return res.json({ id, local, descricao, localidade, coordenadas_geograficas, id_local });
+      return res.json({ id, local, cep, localidade, lat, lon, id_local, user_id, link_google });
     } catch (e) {
       console.log(e);
       return res.status(400).json({

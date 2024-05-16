@@ -14,6 +14,7 @@ JSON Web Tokens (JWT) para autenticação
 Swagger para documentação de API
 Instalação e Execução
 Clone o repositório do GitHub
+https://nominatim.openstreetmap.org/
 
 
 bash

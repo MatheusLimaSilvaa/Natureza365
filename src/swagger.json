@@ -1,68 +1,449 @@
 {
-    "openapi": "3.0.0",
+    "openapi": "3.0.1",
     "info": {
         "title": "ConectOfNature",
         "description": "Essa API tem como base a conexão humana com a natureza.",
-        "termOfService": "http://localhost:3000/terms",
-        "contact": {
-            "email": "matheus_lima-silva@estudante.sesisenai.org.br"
-        },
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://localhost:3000/v1",
-            "description": "API de test"
+            "url": "http://localhost:3000",
+            "description": "Local server"
         }
     ],
     "paths": {
         "/users": {
-            "post": {
-                "summary": "Cadastro de Usuário",
-                "description": "Essa rota será responsável por cadastrar um novo usuário",
+            "get": {
+                "summary": "Busca de usuários",
                 "tags": [
-                    "user"
+                    "Users"
                 ],
                 "security": [
                     {
                         "bearerAuth": []
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "List of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Cadastro de Usuário",
+                "tags": [
+                    "Users"
+                ],
                 "requestBody": {
+                    "description": "Data for the new user",
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/user"
+                                "$ref": "#/components/schemas/User"
                             },
                             "examples": {
-                                "user": {
+                                "Users": {
                                     "value": {
+                                        "id": "1",
                                         "nome": "Matheus Lima",
                                         "sexo": "Masculino",
                                         "cpf": "12345678912",
                                         "endereco": "José Maria da Luz, 539",
                                         "email": "matheuslima@teste.com",
-                                        "data_de_nascimento": "1995-18-08"
+                                        "data_de_nascimento": "1995-08-18"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "response": {
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "400": {
-                        "description": "user Already exists"
-                    },
-                    "200": {
-                        "description": "Registered user",
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/user"
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "summary": "Busca de user pelo ID",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar user pelo ID",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated user data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Users": {
+                                    "value": {
+                                        "id": "5",
+                                        "nome": "anderson silva",
+                                        "sexo": "Masculino",
+                                        "cpf": "12345612312",
+                                        "endereco": "joão mota espezim",
+                                        "email": "anderson@teste.com",
+                                        "data_de_nascimento": "1992-06-06"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar usuário",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/locals": {
+            "get": {
+                "summary": "Busca de locals",
+                "tags": [
+                    "Locals"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of locals",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Local"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Cadastro de Local",
+                "tags": [
+                    "Locals"
+                ],
+                "requestBody": {
+                    "description": "Data for the new local",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Local"
+                            },
+                            "examples": {
+                                "locals": {
+                                    "value": {
+                                        "id": "1",
+                                        "cep": "88010-400",
+                                        "local": "R. José Maria da Luz, 539",
+                                        "descricao": "josé mendes",
+                                        "localidade": "Florianópolis",
+                                        "lat": "-27.6144234",
+                                        "lon": "-48.5448067",
+                                        "id_local": "50",
+                                        "user_id": "1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Local created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Local"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/locals/{id}": {
+            "get": {
+                "summary": "Busca de local pelo ID",
+                "tags": [
+                    "Locals"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Local ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Local details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Local"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Local not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar local pelo ID",
+                "tags": [
+                    "Locals"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Local ID"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated local data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Local"
+                            },
+                            "examples": {
+                                "locals": {
+                                    "value": {
+                                        "id": "1",
+                                        "cep": "88045-500",
+                                        "local": "Av. Pref. Waldemar Vieira",
+                                        "descricao": "Saco dos Limões",
+                                        "localidade": "Florianópolis",
+                                        "lat": "-27.6010109",
+                                        "lon": "-48.5401561",
+                                        "id_local": "60",
+                                        "user_id": "1"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Local updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Local"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Local not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar Local",
+                "tags": [
+                    "Locals"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Local ID"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Local deleted successfully"
+                    },
+                    "404": {
+                        "description": "Local not found"
+                    }
+                }
+            }
+        },
+        "/maps": {
+            "get": {
+                "summary": "Retrieves map information",
+                "tags": [
+                    "map"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Map information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Map"
+                                    },
+                                    "examples": {
+                                        "locals": {
+                                            "value": {
+                                                "cep": "88045-500"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -71,128 +452,94 @@
             }
         }
     },
-    "/users/{id}": {
-        "get": {
-            "description": "Buscar de um usuário pelo id",
-            "summary": "Busca de um usuário pelo id",
-            "tags": [
-                "user"
-            ],
-            "parameters": [
-                {
-                    "nome": "id",
-                    "in": "path",
-                    "description": "id do usuário para busca",
-                    "required": true
-                }
-            ],
-            "response": {
-                "200": {
-                    "description": "user obtained",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/user"
-                                }
-                            }
-                        }
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "sexo": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "endereco": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "data_de_nascimento": {
+                        "type": "string"
                     }
                 },
-                "put": {
-                    "description": "Alterar um usuário pelo id",
-                    "summary": "Alterar um usuário pelo id",
-                    "tags": [
-                        "user"
-                    ],
-                    "security": [
-                        {
-                            "bearerAuth": []
-                        }
-                    ],
-                    "parameters": [
-                        {
-                            "nome": "id",
-                            "in": "path",
-                            "description": "id do usuário para Alterar",
-                            "required": true
-                        }
-                    ],
-                    "requestBody": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/user"
-                                },
-                                "examples": {
-                                    "user": {
-                                        "value": {
-                                            "nome": "Matheus Lima silva",
-                                            "sexo": "Masculino",
-                                            "cpf": "12345678901",
-                                            "endereco": "josé mendes, 500",
-                                            "email": "matheuslimasilva@teste.com",
-                                            "data_de_nascimento": "1999-20-10"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                "required": [
+                    "name",
+                    "sexo",
+                    "cpf",
+                    "endereco",
+                    "email",
+                    "data_de_nascimento"
+                ]
+            },
+            "Local": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
                     },
-                    "response": {
-                        "200": {
-                            "description": "user obtained",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "object",
-                                        "items": {
-                                            "$ref": "#/components/schemas/user"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    "local": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "localidade": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "string"
+                    },
+                    "lon": {
+                        "type": "string"
+                    },
+                    "id_local": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "cep": {
+                        "type:": "string"
                     }
-                }
+                },
+                "required": [
+                    "cep"
+                ]
+            },
+            "Map": {
+                "type": "object",
+                "properties": {
+                    "cep": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "cep"
+                ]
             }
         },
-        "components": {
-            "schemas": {
-                "user": {
-                    "type": "object",
-                    "properties": {
-                        "nome": {
-                            "type": "string"
-                        },
-                        "sexo": {
-                            "type": "string"
-                        },
-                        "cpf": {
-                            "type": "string"
-                        },
-                        "endereco": {
-                            "type": "string"
-                        },
-                        "email": {
-                            "type": "string"
-                        },
-                        "data_de_nascimento": {
-                            "type": "string"
-                        },
-                        "id": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "securitySchemes": {
-                "bearerAuth": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
-                }
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }

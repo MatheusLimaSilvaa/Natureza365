@@ -10,6 +10,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import delay from 'express-delay';
 
+import map from './routes/mapRoutes'
 import auth from './routes/authRoutes';
 import user from './routes/userRoutes';
 import local from './routes/localRoutes';
@@ -47,6 +48,7 @@ class App {
     this.app.use('/', auth);
     this.app.use('/users/', user);
     this.app.use('/local/', local);
+    this.app.use('/map/', map);
   }
 }
 

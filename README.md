@@ -79,5 +79,5 @@ Acesse a documentação da API através do Swagger em http://localhost:3000/docu
 Adição de funcionalidades para interação social entre os usuários, como comentários e avaliações dos locais.
 Integração com outras APIs de geolocalização para melhorar a precisão das coordenadas dos locais.**
 
-
+*Link explicando o projeto* -> https://drive.google.com/file/d/1e8YMOhex6yP8cLGVdkRG699cPhd2rIud/view?usp=sharing
 *Feito por*: **Matheus De Lima Silva**

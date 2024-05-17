@@ -5,34 +5,40 @@ class LocalC {
   //STORE -> CRIAÇÃO
   async store(req, res) {
     try {
-      const { cep2 } = req.body;
-      const { id2 } = req.userId
-      const response = await axios.get(`http://localhost:3000/map/${cep2}`)
-      
+      const { cep } = req.body;
+      const response = await axios.get(`http://localhost:3000/map/${cep}`).then().catch(e => undefined)
       const reqId = req.userId;
-      const novoLocal = await Local.create({...req.body, user_id: reqId, 
+
+
+      let novoLocal;
+    if (!response) {
+       novoLocal = await Local.create({...req.body, user_id: reqId});
+    } else {
+       novoLocal = await Local.create({...req.body, user_id: reqId, 
         local: response.data.bairro,
-        cep: cep2,
+        cep: cep,
         localidade: response.data.cidade,
         lat: response.data.lat,
         lon: response.data.lon,
         id_local: response.data.id_local,
-        user_id: id2,
-        link_google: response.data.link_googl
+        link_google: response.data.link_google
       });
+    }
+      
+      
 
-      const { id, local, cep, localidade, lat, lon, id_local, user_id, link_google } = novoLocal;
+      const { id, local, localidade, lat, lon, id_local, link_google } = novoLocal;
 
-      return res.json({ id, local, cep, localidade, lat, lon, id_local, user_id, link_google });
+      return res.json({ id, local, cep, localidade, lat, lon, id_local, link_google });
     } catch (e) {
-      console.log(e)
+     console.log(e)
     }
   }
 
   //INDEX -> LISTAR TODOS
   async index(req, res) {
     try {
-      const locals = await Local.findAll({ attributes: ['id', 'local', 'cep', 'localidade', 'lat', 'lon', 'id_local', 'user_id', 'link_google'] });
+      const locals = await Local.findAll({ attributes: ['id', 'local', 'cep', 'localidade', 'lat', 'lon', 'id_local', 'link_google', 'user_id'] });
       return res.json(locals);
     } catch (e) {
       console.log(e);
@@ -51,9 +57,9 @@ class LocalC {
         });
       }
 
-      const { id, local, cep, localidade, lat, lon, id_local, user_id, link_google } = locals;
+      const { id, local, cep, localidade, lat, lon, id_local, link_google, user_id } = locals;
 
-      return res.json({ id, local, cep, localidade, lat, lon, id_local, user_id, link_google });
+      return res.json({ id, local, cep, localidade, lat, lon, id_local, link_google, user_id });
     } catch (e) {
       console.log(e);
       return res.status(400).json({

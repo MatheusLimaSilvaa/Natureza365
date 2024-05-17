@@ -7,33 +7,37 @@ export default class Local extends Model {
         type: Sequelize.STRING,
         defaultValue: '',
         validate: {
-            len: {
-              args: [4, 30],
-              msg: 'o local precisa ter entre 4 e 30 caracteres.',
-            },
+          len: {
+            args: [4, 30],
+            msg: 'o local precisa ter entre 4 e 30 caracteres.',
           },
+        },
       },
-      descricao: {
+      cep: {
         type: Sequelize.STRING,
         defaultValue: '',
         validate: {
           len: {
-            args: [4, 30],
-            msg: 'a descricao precisa ter entre 4 e 30 caracteres.',
+            args: [8, 9],
+            msg: 'o cep',
           },
         },
       },
       localidade: {
         type: Sequelize.STRING,
         defaultValue: '',
-          validate: {
-            len: {
-              args: [4, 30],
-              msg: 'a localidade precisa ter entre 4 e 30 caracteres.',
-            },
+        validate: {
+          len: {
+            args: [1, 50],
+            msg: 'localidade',
           },
+        },
       },
-      coordenadas_geograficas: {
+      lat: {
+        type: Sequelize.STRING,
+        defaultValue: '',
+      },
+      lon: {
         type: Sequelize.STRING,
         defaultValue: '',
       },
@@ -41,15 +45,19 @@ export default class Local extends Model {
         type: Sequelize.INTEGER,
         defaultValue: '',
       },
+      link_google: {
+        type: Sequelize.INTEGER,
+        defaultValue: '',
+      },
     }, {
-        sequelize,
-      });
+      sequelize,
+    });
 
-      return this;
+    return this;
 
-    }
-
-    static associate(models) {
-      this.belongsTo(models.User, { foreignKey: 'user_id' });
-    }
   }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'user_id' });
+  }
+}
